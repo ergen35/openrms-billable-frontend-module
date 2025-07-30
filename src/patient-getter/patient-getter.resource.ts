@@ -24,12 +24,7 @@ import { fhirBaseUrl, openmrsFetch } from '@openmrs/esm-framework';
 
 export function usePatient(query: string) {
   const url = `${fhirBaseUrl}/Patient?name=${query}&_summary=data`;
-  const { data, error, isLoading } = useSWR<
-    {
-      data: { entry: Array<{ resource: fhir.Patient }> };
-    },
-    Error
-  >(query ? url : null, openmrsFetch);
+  const { data, error, isLoading } = useSWR<{ data: { entry: Array<{ resource: fhir.Patient }> }; }, Error>(query ? url : null, openmrsFetch);
 
   return {
     patient: data ? data?.data?.entry[0].resource : null,

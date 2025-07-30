@@ -25,7 +25,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { useConfig } from '@openmrs/esm-framework';
 import { Config } from './config-schema';
-import Root from './root.component';
+import RootComponent from './root.component';
 
 /**
  * This is an idiomatic way of dealing with mocked files. Note that
@@ -37,10 +37,18 @@ import Root from './root.component';
 const mockUseConfig = jest.mocked(useConfig<Config>);
 
 it('renders a landing page for the Template app', () => {
-  const config: Config = { casualGreeting: false, whoToGreet: ['World'] };
+  const config: Config = { 
+    casualGreeting: false, 
+    whoToGreet: ['World'],
+    billingMetadata: {
+      supplierName: 'Clinique Darnin 00',
+      supplierIFU: '68918198911',
+      supplierNIM: 'df57d4c3-cd94-419f-8a35-f19361615ad4'
+    }
+  };
   mockUseConfig.mockReturnValue(config);
 
-  render(<Root />);
+  render(<RootComponent />);
 
   expect(screen.getByRole('heading', { name: /welcome to the o3 template app/i })).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: /configuration system/i })).toBeInTheDocument();

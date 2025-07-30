@@ -6,25 +6,41 @@
   },
   "extensions": [
     {
-      "name": "Red box",
-      "component": "redBox",
-      "slot": "Boxes"
+      "name": "billables-left-panel-link",
+      "component": "billablesLeftPanelLink",
+      "slot": "homepage-dashboard-slot",
+      "meta": {
+        "name": "billables",
+        "title": "Billables",
+        "slot": "billables-dashboard-slot"
+      }
     },
     {
-      "name": "Blue box",
-      "component": "blueBox",
-      "slot": "Boxes"
+      "name": "bills-overview-left-panel-link",
+      "component": "billsOverviewLeftPanelLink",
+      "slot": "bills-management-left-panel-slot"
     },
-        {
-      "name": "Brand box",
-      "component": "blueBox",
-      "slot": "Boxes"
+    {
+      "name": "bills-management-left-panel-link",
+      "component": "billablesManagementLeftPanelLink",
+      "slot": "bills-management-left-panel-slot"
+    },
+    {
+      "name": "recentlyEmittedBills",
+      "component": "recentlyEmittedBills",
+      "slot": "BillablesOverview"
     }
   ],
   "pages": [
     {
       "component": "root",
-      "route": "root"
+      "route": "billables"
+    }
+  ],
+  "modals": [
+    {
+      "name": "billDetailsModal",
+      "component": "billDetailsModal"
     }
   ]
 }

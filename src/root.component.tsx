@@ -8,32 +8,41 @@
  *   https://openmrs.github.io/openmrs-esm-core/#/main/config
  */
 
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Boxes } from './boxes/slot/boxes.component';
-import Greeter from './greeter/greeter.component';
-import PatientGetter from './patient-getter/patient-getter.component';
-import Resources from './resources/resources.component';
-import styles from './root.scss';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { LeftNavMenu, setLeftNav, unsetLeftNav } from '@openmrs/esm-framework';
+import styles from "./root.scss"
+import BillsOverviewPage from './bills-management/bills-overview.component';
+import BillablesManagementPage from './bills-management/billables-management.component';
+import BillDetails from './bills-management/bill-details.component';
 
-const Root: React.FC = () => {
-  const { t } = useTranslation();
+const RootComponent: React.FC = () => {
+
+  const spaBasePath = window.getOpenmrsSpaBase() + "billables";
+
+  useEffect(() => {
+
+    setLeftNav({
+      name: "bills-management-left-panel-slot",
+      basePath: spaBasePath,
+    })
+
+    return () => unsetLeftNav("bills-management-left-panel-slot")
+
+  }, [spaBasePath])
 
   return (
-    <div className={styles.container}>
-      <h3 className={styles.welcome}>{t('welcomeText', 'Welcome to the O3 Template app')}</h3>
-      <p className={styles.explainer}>
-        {t('explainer', 'The following examples demonstrate some key features of the O3 framework')}.
-      </p>
-      {/* Greeter: demonstrates the configuration system */}
-      <Greeter />
-      {/* Boxes: demonstrates the extension system */}
-      <Boxes />
-      {/* PatientGetter: demonstrates data fetching */}
-      <PatientGetter />
-      <Resources />
-    </div>
-  );
+    <BrowserRouter basename={window.getOpenmrsSpaBase() + "billables"}>
+      <LeftNavMenu />
+      <main className={styles.container} style={{ paddingLeft: 280 }}>
+        <Routes>
+          <Route path='/' element={<BillsOverviewPage />} />
+          <Route path='/billables-management' element={<BillablesManagementPage />} />
+          <Route path='/:billId' element={<BillDetails />} />
+        </Routes>
+      </main>
+    </BrowserRouter>
+  )
 };
 
-export default Root;
+export default RootComponent;

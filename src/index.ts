@@ -4,13 +4,15 @@
  * connects the app shell to the React application(s) that make up this
  * microfrontend.
  */
-import { getAsyncLifecycle, defineConfigSchema } from '@openmrs/esm-framework';
+import { getAsyncLifecycle, defineConfigSchema, getSyncLifecycle } from '@openmrs/esm-framework';
 import { configSchema } from './config-schema';
+import { createBillableModuleLeftPanelLink } from './utils/billables-left-panel-link.component';
+import { createGeneralLeftPanelLink } from './utils/left-panel-link.component';
 
-const moduleName = '@openmrs/esm-template-app';
+const moduleName = '@openmrs/esm-billables-app';
 
 const options = {
-  featureName: 'root-world',
+  featureName: '',
   moduleName,
 };
 
@@ -37,13 +39,58 @@ export function startupApp() {
  * will be `openmrsSpaBase() + 'root'`, which is usually
  * `/openmrs/spa/root`.
  */
-export const root = getAsyncLifecycle(() => import('./root.component'), options);
+export const root = getAsyncLifecycle(() => import("./root.component"), options);
+
 
 /**
- * The following are named exports for the extensions defined in this frontend modules. See the `routes.json` file to see how these are used.
+ * Named import for bill details page
  */
-export const redBox = getAsyncLifecycle(() => import('./boxes/extensions/red-box.component'), options);
 
-export const blueBox = getAsyncLifecycle(() => import('./boxes/extensions/blue-box.component'), options);
+export const billDetails = getAsyncLifecycle(() => import("./bills-management/bill-details.component"), options);
 
-export const brandBox = getAsyncLifecycle(() => import('./boxes/extensions/brand-box.component'), options);
+
+/**
+ * Register modals here
+ */
+
+export const billDetailsModal = getAsyncLifecycle(() => import("./modals/bill-details.modal"), options)
+
+
+//active visits component
+export const recentlyEmittedBills = getAsyncLifecycle(() => import('./recent-bills/extensions/recent-bills.component'), options);
+
+
+/**
+ * Left panel Links
+*/
+
+export const billablesLeftPanelLink = getSyncLifecycle(
+  createBillableModuleLeftPanelLink({
+    name: "",
+    title: "Billables",
+    slot: "billables-dashboard-slot"
+  }),
+  options
+)
+
+/**
+ * Billables specific Left panel - Links
+ */
+export const billsOverviewLeftPanelLink = getSyncLifecycle(
+  createBillableModuleLeftPanelLink({
+    name: "",
+    title: "Bills Overview",
+    slot: "bills-management-left-panel-slot"
+  }),
+  options
+)
+
+export const billablesManagementLeftPanelLink = getSyncLifecycle(
+  createBillableModuleLeftPanelLink({
+    name: "billables-management",
+    title: "Billables Management",
+    slot: "bills-management-left-panel-slot"
+  }),
+  options
+)
+
