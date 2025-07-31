@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../root.scss";
 import Resources from '../resources/resources.component';
 import { Button } from '@carbon/react';
-import { showModal, useConfig } from '@openmrs/esm-framework';
+import { launchWorkspace, showModal, useConfig } from '@openmrs/esm-framework';
 import BillablesOverview from '../recent-bills/slot/billables-overview.component';
 import { Config } from '../config-schema';
 import { NavLink } from "react-router-dom";
@@ -15,6 +15,12 @@ function BillablesManagementPage() {
     const dispose = showModal('billDetailsModal', {
       onClose: () => dispose(),
       props: {}
+    })
+  }
+
+  function openOrderBasket() {
+    launchWorkspace("order-basket", {
+      workspaceTitle: "Order Basket"
     })
   }
 
@@ -39,6 +45,10 @@ function BillablesManagementPage() {
       <div style={{ marginBottom: 10 }}>
         <Button onClick={handleBillModalDisplay}>
           Open Modal
+        </Button>
+
+        <Button onClick={openOrderBasket}>
+          Open Order Basket
         </Button>
       </div>
       <div>

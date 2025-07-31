@@ -15,6 +15,7 @@ import styles from "./root.scss"
 import BillsOverviewPage from './bills-management/bills-overview.component';
 import BillablesManagementPage from './bills-management/billables-management.component';
 import BillDetails from './bills-management/bill-details.component';
+import PageZero from './page-zero/page-zero.component';
 
 const RootComponent: React.FC = () => {
 
@@ -39,6 +40,7 @@ const RootComponent: React.FC = () => {
           <Route path='/' element={<BillsOverviewPage />} />
           <Route path='/billables-management' element={<BillablesManagementPage />} />
           <Route path='/:billId' element={<BillDetails />} />
+          <Route path="/page-zero" element={<PageZero/>} />
         </Routes>
       </main>
     </BrowserRouter>

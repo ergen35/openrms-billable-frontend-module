@@ -8,6 +8,7 @@ import { getAsyncLifecycle, defineConfigSchema, getSyncLifecycle } from '@openmr
 import { configSchema } from './config-schema';
 import { createBillableModuleLeftPanelLink } from './utils/billables-left-panel-link.component';
 import { createGeneralLeftPanelLink } from './utils/left-panel-link.component';
+// import { registerWorkspace } from "@openmrs/esm-patient-common-lib";
 
 const moduleName = '@openmrs/esm-billables-app';
 
@@ -15,6 +16,7 @@ const options = {
   featureName: '',
   moduleName,
 };
+
 
 /**
  * This tells the app shell how to obtain translation files: that they
@@ -31,6 +33,9 @@ export const importTranslation = require.context('../translations', false, /.jso
  */
 export function startupApp() {
   defineConfigSchema(moduleName, configSchema);
+
+  //register workspaces
+  
 }
 
 /**
@@ -40,6 +45,17 @@ export function startupApp() {
  * `/openmrs/spa/root`.
  */
 export const root = getAsyncLifecycle(() => import("./root.component"), options);
+
+
+//regular page
+export const pageZero = getSyncLifecycle(
+  createGeneralLeftPanelLink({
+    name: "page-zero",
+    title: "Page Zero",
+    slot: "left-panel-slot"
+  }),
+  options
+);
 
 
 /**
@@ -59,6 +75,7 @@ export const billDetailsModal = getAsyncLifecycle(() => import("./modals/bill-de
 //active visits component
 export const recentlyEmittedBills = getAsyncLifecycle(() => import('./recent-bills/extensions/recent-bills.component'), options);
 
+export const insuranceProvidersManagementDashboardExtension = getAsyncLifecycle(() => import("./patient-chart-summary-extensions/insurance-providers/manage-insurance-provider.component"), options);
 
 /**
  * Left panel Links
@@ -93,4 +110,14 @@ export const billablesManagementLeftPanelLink = getSyncLifecycle(
   }),
   options
 )
+
+
+//workspace
+export const patientBillsWorkspace = getAsyncLifecycle(() => import("./workspaces/patient-bills.workspace"), options);
+
+
+export const addPatientInsuranceProviderWorkspace = getAsyncLifecycle(() => import('./workspaces/add-patient-insurance.workspace'), options)
+
+//workspace action buton
+export const patientBillsWorkspaceActionButton = getAsyncLifecycle(() =>  import("./workspaces/patient-bills-workspace-button"), options);
 

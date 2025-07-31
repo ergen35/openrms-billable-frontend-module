@@ -6,6 +6,16 @@
   },
   "extensions": [
     {
+      "name": "insurance-providers-management-dashboard-extension",
+      "component": "insuranceProvidersManagementDashboardExtension",
+      "slot": "patient-chart-summary-dashboard-slot"
+    },
+    {
+      "name": "patient-bills-workspace-action-button",
+      "component": "patientBillsWorkspaceActionButton",
+      "slot": "action-menu-patient-chart-items-slot"
+    },
+    {
       "name": "billables-left-panel-link",
       "component": "billablesLeftPanelLink",
       "slot": "homepage-dashboard-slot",
@@ -13,6 +23,16 @@
         "name": "billables",
         "title": "Billables",
         "slot": "billables-dashboard-slot"
+      }
+    },
+    {
+      "name": "page-zero",
+      "component": "pageZero",
+      "slot": "homepage-dashboard-slot",
+      "meta": {
+        "name": "page-zero",
+        "title": "Page Zero",
+        "slot": "page-zero-dashboard-slot"
       }
     },
     {
@@ -41,6 +61,24 @@
     {
       "name": "billDetailsModal",
       "component": "billDetailsModal"
+    }
+  ],
+  "workspaces": [
+    {
+      "name": "patient-bills",
+      "title": "Create A New Patient Bills",
+      "component": "patientBillsWorkspace",
+      "type": "other-form",
+      "canMaximize": false,
+      "canHide": false
+    },
+    {
+      "name": "add-patient-insurance-provider-ws",
+      "title": "Add Patient Insurance Provider",
+      "component": "addPatientInsuranceProviderWorkspace",
+      "type": "other-form",
+      "canMaximize": true,
+      "canHide": false
     }
   ]
 }
